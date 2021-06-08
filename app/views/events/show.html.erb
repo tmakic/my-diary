@@ -1,0 +1,65 @@
+<h1>
+    <%= @date %>
+</h1>
+
+<h2>
+    <% if @selected_date_event.nil? %>
+        <%= link_to '追加', new_event_path %>
+    <% else %>
+        <%= link_to '編集', edit_event_path(@date) %>
+        <%= link_to '削除', controller: "events", action: "delete_confirm" %>
+    <% end %>
+</h2>
+
+<div class="d-flex">
+    <div class="calendar-wrap">
+        <%= month_calendar events: @events do |date, events| %>
+            <%= link_to date.day, event_url(date) %>
+            <% #何かしら登録したら👍 %>
+            <% if(events.length > 0) %>
+                <p>👍</p>
+                <% #筋トレをコンプしたら🥇 %>
+                <% if(is_exercise_complete(events[0][:exercise])) %>
+                    <p>🥇</p>
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
+
+    <div class="diary-wrap">
+        <% if @selected_date_event.nil? %>
+            <p>未登録</p>
+        <% else %>
+            <div>
+                <div class="content-block">
+                    <h3>日付</h3>
+                    <p>
+                        <%= @date %>
+                    </p>
+                </div>
+                <div class="content-block">
+                    <h3>やったこと</h3>
+                    <%= simple_format(@selected_date_event.done, {}, wrapper_tag: "div") %>
+                </div>
+                <div class="content-block">
+                    <h3>できたこと</h3>
+                    <%= simple_format(@selected_date_event.achievement, {}, wrapper_tag: "div") %>
+                </div>
+                <div class="content-block">
+                    <h3>筋トレ</h3>
+                    <% @exercise_check_status.each do |k, v| %>
+                        <%= check_box_tag 'v', k, v, {disabled: true} %>
+                        <%= k %>
+                    <% end %>
+                </div>
+                <div class="content-block">
+                    <h3>メモ</h3>
+                    <%= simple_format(@selected_date_event.memo, {}, wrapper_tag: "div") %>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>
+
+
+
