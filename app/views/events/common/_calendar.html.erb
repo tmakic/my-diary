@@ -1,0 +1,13 @@
+<div class="calendar-wrap">
+    <%= month_calendar events: @events do |date, events| %>
+        <%= link_to date.day, event_url(date) %>
+        <% #何かしら登録したら👍 %>
+        <% if(events.length > 0) %>
+            <p>👍</p>
+            <% #筋トレをコンプしたら🥇 %>
+            <% if(is_exercise_complete(events[0])) %>
+                <p>🥇</p>
+            <% end %>
+        <% end %>
+    <% end %>
+</div>

@@ -1,0 +1,33 @@
+<div class="diary-wrap">
+    <% if @selected_date_event.nil? %>
+        <p>未登録</p>
+    <% else %>
+        <div>
+            <div class="content-block">
+                <h3>日付</h3>
+                <p>
+                    <%= @date %>
+                </p>
+            </div>
+            <div class="content-block">
+                <h3>やったこと</h3>
+                <%= simple_format(@selected_date_event.done, {}, wrapper_tag: "div") %>
+            </div>
+            <div class="content-block">
+                <h3>できたこと</h3>
+                <%= simple_format(@selected_date_event.achievement, {}, wrapper_tag: "div") %>
+            </div>
+            <div class="content-block pointer-events-none">
+                <h3>筋トレ</h3>
+                <% #ここにチェックが入らない %>
+                <%= collection_check_boxes(@selected_date_event, :exercise_ids, Exercise.all, :id, :label) do |b| %>
+                  <% b.label { b.check_box + b.text } %>
+                <% end %>
+            </div>
+            <div class="content-block">
+                <h3>メモ</h3>
+                <%= simple_format(@selected_date_event.memo, {}, wrapper_tag: "div") %>
+            </div>
+        </div>
+    <% end %>
+</div>

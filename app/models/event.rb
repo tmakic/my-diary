@@ -1,5 +1,6 @@
 class Event < ApplicationRecord
-    # これをどこに置くのが良いかわからない…
-    # 筋トレ部位一覧
-    EXERCISE_PARTS = %w(二の腕 腹筋 裏腿 脚)
+    has_many :event_exercise, dependent: :destroy
+    has_many :exercises, :through => :event_exercise
+    
+    accepts_nested_attributes_for :event_exercise, allow_destroy: true
 end
