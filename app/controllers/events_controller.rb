@@ -10,15 +10,17 @@ class EventsController < ApplicationController
 
     # イベント新規作成ページを表示
     def new
+        @date = params[:date]
         @event = Event.new
-        @exercises = Exercise.all
+        @event[:start_time] = @date === nil ? today : @date
+
         @action = :create
         @button_text = "登録"
     end
 
     # イベントを新規作成
     def create
-        Event.create(event_parameter)
+        Event.create!(event_parameter)
         redirect_to events_url
     end
 
@@ -33,6 +35,7 @@ class EventsController < ApplicationController
     def edit
         @date = params[:id]
         @event = selected_date_event(@date)
+
         @action = :update
         @button_text = "更新"
     end
@@ -60,7 +63,7 @@ class EventsController < ApplicationController
         @date = params[:id]
         @selected_date_event = selected_date_event(@date)
         if (@selected_date_event)
-            @selected_date_event.destroy
+            @selected_date_event.destroy!
         end
         redirect_to events_path
     end

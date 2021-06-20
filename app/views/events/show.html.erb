@@ -4,7 +4,7 @@
 
 <h2>
     <% if @selected_date_event.nil? %>
-        <%= link_to '追加', new_event_path %>
+        <%= link_to '追加', new_event_path(date: @date) %>
     <% else %>
         <%= link_to '編集', edit_event_path(@date) %>
         <%= link_to '削除', controller: "events", action: "delete_confirm" %>
